@@ -41,10 +41,12 @@ export default function DashboardLayout({ children }) {
   const fetchProfile = async (id) => {
     try {
       const res = await fetch(`${API_URL}/profile/${id}`);
-      const data = await res.json();
+      const text = await res.text();
+      console.log("Profile Response Text:", text);
+      const data = JSON.parse(text);
       setUserData(data);
     } catch (err) {
-      console.error("Failed to fetch profile");
+      console.error("Failed to fetch profile:", err);
     }
   };
 

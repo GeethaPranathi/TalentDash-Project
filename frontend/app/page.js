@@ -28,7 +28,16 @@ export default function Home() {
   // FETCH SALARIES
   useEffect(() => {
     fetch(`${API_URL}/salaries`)
-      .then((res) => res.json())
+      .then(async (res) => {
+        const text = await res.text();
+        console.log("Salaries Response Text:", text);
+        try {
+          return JSON.parse(text);
+        } catch (e) {
+          console.error("JSON Parse Error at /salaries:", e);
+          return [];
+        }
+      })
       .then((data) => {
         if (Array.isArray(data)) {
           setSalaries(data);
@@ -38,6 +47,7 @@ export default function Home() {
         setLoading(false);
       })
       .catch((err) => {
+        console.error("Fetch Error at /salaries:", err);
         setSalaries([]);
         setLoading(false);
       });
