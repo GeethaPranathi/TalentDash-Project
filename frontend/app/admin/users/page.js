@@ -6,6 +6,7 @@ import DashboardLayout from "../../../components/DashboardLayout";
 import { toast } from "react-hot-toast";
 import { User, Mail, Shield, Trash2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { API_URL } from "../../../utils/config";
 
 export default function AdminUsersPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function AdminUsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/users");
+      const res = await fetch(`${API_URL}/users`);
       const data = await res.json();
       setUsers(data);
       setLoading(false);
@@ -37,7 +38,7 @@ export default function AdminUsersPage() {
   const deleteUser = async (id) => {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/users/${id}`, {
+      const res = await fetch(`${API_URL}/users/${id}`, {
         method: "DELETE"
       });
       if (res.ok) {

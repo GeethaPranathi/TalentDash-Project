@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import DashboardLayout from "../../components/DashboardLayout";
 import { toast } from "react-hot-toast";
 import { PlusCircle, Briefcase, MapPin, IndianRupee } from "lucide-react";
+import { API_URL } from "../../utils/config";
 
 export default function RecruiterPage() {
   const [jobs, setJobs] = useState([]);
@@ -25,7 +26,7 @@ export default function RecruiterPage() {
 
   const fetchJobs = async () => {
     try {
-      const res = await fetch("http://localhost:5000/jobs");
+      const res = await fetch(`${API_URL}/jobs`);
       const data = await res.json();
       setJobs(data);
       setLoading(false);
@@ -45,7 +46,8 @@ export default function RecruiterPage() {
 
     try {
       const payload = JSON.parse(atob(token.split(".")[1]));
-      const res = await fetch("http://localhost:5000/jobs", {
+      setLoading(true);
+      const res = await fetch(`${API_URL}/jobs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, postedById: payload.id })

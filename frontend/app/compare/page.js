@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/DashboardLayout";
+import { toast } from "react-hot-toast";
+import { API_URL } from "../../utils/config";
 
 export default function ComparePage() {
   const [salaries, setSalaries] = useState([]);
@@ -9,9 +11,10 @@ export default function ComparePage() {
   const [company2, setCompany2] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/salaries")
+    fetch(`${API_URL}/salaries`)
       .then((res) => res.json())
-      .then((data) => setSalaries(data));
+      .then((data) => setSalaries(data))
+      .catch(() => toast.error("Failed to fetch salary data"));
   }, []);
 
   const company1Data = salaries.find(

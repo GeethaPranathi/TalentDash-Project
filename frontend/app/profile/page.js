@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../../components/DashboardLayout";
 import { toast } from "react-hot-toast";
 import { User, Camera, Save, X, Edit2 } from "lucide-react";
+import { API_URL } from "../../utils/config";
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -30,7 +31,7 @@ export default function ProfilePage() {
 
   const fetchProfile = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/profile/${id}`);
+      const res = await fetch(`${API_URL}/profile/${id}`);
       const data = await res.json();
       setUser(data);
       setFormData({
@@ -46,7 +47,7 @@ export default function ProfilePage() {
 
   const handleUpdate = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/profile/${user.id}`, {
+      const res = await fetch(`${API_URL}/profile/${user.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
 // Secret must match the backend
-const SECRET = new TextEncoder().encode('SECRET_KEY');
+const SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'SECRET_KEY');
 
 export default async function proxy(request) {
   const token = request.cookies.get('token')?.value;

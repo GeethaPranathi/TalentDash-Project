@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-hot-toast';
+import { API_URL } from "../../utils/config";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function RegisterPage() {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/register", {
+      const res = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, role })

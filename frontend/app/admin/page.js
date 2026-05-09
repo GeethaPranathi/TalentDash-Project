@@ -6,6 +6,7 @@ import Link from "next/link";
 import DashboardLayout from "../../components/DashboardLayout";
 import { CSVLink } from "react-csv";
 import { toast } from "react-hot-toast";
+import { API_URL } from "../../utils/config";
 import {
   PieChart, Pie, Cell,
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer
@@ -23,7 +24,7 @@ export default function AdminPage() {
       return;
     }
 
-    fetch("http://localhost:5000/salaries")
+    fetch(`${API_URL}/salaries`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -40,7 +41,7 @@ export default function AdminPage() {
 
   async function deleteSalary(id) {
     try {
-      await fetch(`http://localhost:5000/delete-salary/${id}`, {
+      await fetch(`${API_URL}/delete-salary/${id}`, {
         method: "DELETE"
       });
       setSalaries(salaries.filter((salary) => salary.id !== id));
@@ -52,7 +53,7 @@ export default function AdminPage() {
 
   async function approveSalary(id, status) {
     try {
-      const res = await fetch(`http://localhost:5000/approve-salary/${id}`, {
+      const res = await fetch(`${API_URL}/approve-salary/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status })

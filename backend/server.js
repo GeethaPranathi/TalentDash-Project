@@ -139,7 +139,7 @@ app.post("/login", async (req, res) => {
     email: user.email,
     role: user.role
   },
-  "SECRET_KEY",
+  process.env.JWT_SECRET || "SECRET_KEY",
   {
     expiresIn: "1d"
   }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { useAppContext } from "../components/AppContext";
 import { toast } from "react-hot-toast";
+import { API_URL } from "../utils/config";
 
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -26,7 +27,7 @@ export default function Home() {
 
   // FETCH SALARIES
   useEffect(() => {
-    fetch("http://localhost:5000/salaries")
+    fetch(`${API_URL}/salaries`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -188,7 +189,7 @@ export default function Home() {
               }
               const loadingToast = toast.loading("Analyzing ML model...");
               try {
-                const res = await fetch("http://localhost:5000/predict-salary", {
+                const res = await fetch(`${API_URL}/predict-salary`, {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({ experience, level: predLevel, role: predRole })

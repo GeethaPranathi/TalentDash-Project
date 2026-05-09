@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { useAppContext } from "./AppContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { API_URL } from "../utils/config";
 
 export default function DashboardLayout({ children }) {
   const [darkMode, setDarkMode] = useState(true);
@@ -39,7 +40,7 @@ export default function DashboardLayout({ children }) {
 
   const fetchProfile = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/profile/${id}`);
+      const res = await fetch(`${API_URL}/profile/${id}`);
       const data = await res.json();
       setUserData(data);
     } catch (err) {
@@ -57,7 +58,7 @@ export default function DashboardLayout({ children }) {
 
   const fetchNotifications = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/notifications/${userId}`);
+      const res = await fetch(`${API_URL}/notifications/${userId}`);
       const data = await res.json();
       setNotifications(data);
     } catch (err) {
@@ -67,7 +68,7 @@ export default function DashboardLayout({ children }) {
 
   const markAsRead = async (id) => {
     try {
-      await fetch(`http://localhost:5000/notifications/read/${id}`, { method: "PUT" });
+      await fetch(`${API_URL}/notifications/read/${id}`, { method: "PUT" });
       setNotifications(notifications.map(n => n.id === id ? { ...n, read: true } : n));
     } catch (err) {
       console.error("Failed to mark as read");
@@ -76,7 +77,7 @@ export default function DashboardLayout({ children }) {
 
   const clearNotifications = async () => {
     try {
-      await fetch(`http://localhost:5000/notifications/clear/${userId}`, { method: "DELETE" });
+      await fetch(`${API_URL}/notifications/clear/${userId}`, { method: "DELETE" });
       setNotifications([]);
       setShowNotifications(false);
     } catch (err) {

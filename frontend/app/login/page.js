@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { toast } from 'react-hot-toast';
+import { API_URL } from "../../utils/config";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ export default function LoginPage() {
 
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
