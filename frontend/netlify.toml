@@ -3,8 +3,10 @@
   publish = ".next"
   base = "frontend"
 
-[build.environment]
-  NEXT_USE_NETLIFY_EDGE = "true"
+[[redirects]]
+  from = "/*"
+  to = "/.next/server/app/index.html"
+  status = 200
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
