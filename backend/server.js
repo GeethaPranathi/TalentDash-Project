@@ -13,6 +13,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Support Vercel Services prefixing
+app.use((req, res, next) => {
+  if (req.url.startsWith('/_/backend')) {
+    req.url = req.url.replace('/_/backend', '');
+  } else if (req.url.startsWith('/api')) {
+    req.url = req.url.replace('/api', '');
+  }
+  next();
+});
+
 const PORT = 5000;
 
 
@@ -104,18 +114,6 @@ app.post("/login", async (req, res) => {
       });
 
     }
-    app.post("/predict-salary", (req, res) => {
-
-  const { experience } = req.body;
-
-  const predictedSalary =
-    500000 + experience * 300000;
-
-  res.json({
-    predictedSalary
-  });
-
-});
 
     // CHECK PASSWORD
     const validPassword =

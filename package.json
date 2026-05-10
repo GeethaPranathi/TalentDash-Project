@@ -1,0 +1,7 @@
+{
+  "name": "talentdash-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Root build skipped, services will build individually'"
+  }
+}
